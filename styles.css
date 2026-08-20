@@ -1,0 +1,121 @@
+/* =========================================
+   1. BASE STYLES & MOBILE VIEW (Default)
+   ========================================= */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 20px;
+  background-color: #f4f4f4;
+}
+
+/* Mobile-first: One column grid with 10px gap */
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  /* FIX: 'dense' automatically fills in empty grid holes left by spanning items */
+  grid-auto-flow: dense; 
+}
+
+/* Base figure styling */
+figure {
+  background-color: #ffffff; 
+  color: #333333;
+  border: 2px solid #dddddd;
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; 
+}
+
+/* Make images scale nicely */
+figure img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover; 
+  border-radius: 8px;
+}
+
+
+/* =========================================
+   2. TABLET VIEW (min-width: 772px)
+   ========================================= */
+@media (min-width: 772px) {
+  .grid-container {
+    grid-template-columns: 1fr 1fr; /* Two column grid */
+  }
+  
+  figure {
+    border-radius: 50%; /* Creates a circular shape */
+    aspect-ratio: 1 / 1; /* Forces the figure into a perfect square before rounding */
+  }
+
+  figure:last-child {
+    grid-column: span 2; /* Last figure takes up both columns */
+    /* FIX: Prevents it from becoming a massive circle by shaping it into a rounded pill instead */
+    aspect-ratio: auto;
+    border-radius: 100px;
+    padding: 30px;
+  }
+}
+
+
+/* =========================================
+   3. LARGE SCREEN VIEW (min-width: 992px)
+   ========================================= */
+@media (min-width: 992px) {
+  .grid-container {
+    /* FIX: Upgrades the layout to 3 columns for larger screens */
+    grid-template-columns: repeat(3, 1fr); 
+  }
+
+  figure {
+    border-radius: 0; /* Removes the border radius from all figures */
+    aspect-ratio: auto; /* Resets it back to a normal rectangle */
+  }
+  
+  figure:nth-child(3n) {
+    grid-column: span 2; /* Every third figure takes up two columns */
+  }
+  
+  figure:last-child {
+    /* FIX: Resets the tablet span rule so the final item fits perfectly into the 3-column flow */
+    grid-column: span 1; 
+    border-radius: 0;
+  }
+}
+
+
+/* =========================================
+   4. USER PREFERENCE: REDUCED MOTION
+   ========================================= */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto; /* Removes the smooth scroll behavior */
+  }
+}
+
+
+/* =========================================
+   5. USER PREFERENCE: DARK MODE
+   ========================================= */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #121212; /* Darkens the page background slightly */
+  }
+  
+  figure {
+    background-color: #222222; /* Dark figure background */
+    color: #ffeb3b; /* Lighter, yellow-ish font color */
+    border-color: #000000; /* Black border */
+  }
+}
